@@ -26,7 +26,9 @@
   --bg:#11110F; --panel:#161614; --fg:#F6F0DA; --muted:#8E8B80; --dim:#5F5D56; --line:#2C2B27;
   --inv-bg:#F6F0DA; --inv-fg:#11110F; --stage:#F6F0DA; --stage-line:#2C2B27;
   --ok:#9AD6AE; --bad:#F09C8C; --warn:#E6C066; --spec-blue:#6C9AEA;
-  --blue:#003DA5; --gold:#F2A900;
+  --blue:#003DA5; --lblue:#0072CE; --gold:#F2A900;
+  --stripe:linear-gradient(90deg,#003DA5 33.33%,#0072CE 33.33% 66.66%,#F2A900 66.66%);
+  --sec-top:clamp(48px,6vw,88px); --sec-bottom:clamp(72px,9vw,128px); --meta-gap:clamp(28px,3.5vw,48px); --lead-gap:clamp(20px,2vw,28px); --content-gap:clamp(36px,4.5vw,56px);
   --display:"Channel Islands","Arial Narrow",sans-serif;
   --body:"Open Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
@@ -58,9 +60,9 @@ h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
 
 /* Top bar: the four primary destinations, louder than the numbered section nav */
 .top{border-bottom:1px solid var(--line)}
-.top .frame{display:grid;grid-template-columns:minmax(220px,1fr) repeat(4,minmax(0,.85fr)) minmax(0,.9fr);min-height:150px}
+.top .frame{display:grid;grid-template-columns:minmax(200px,1fr) repeat(4,minmax(0,.85fr)) minmax(0,.9fr);min-height:150px}
 .brand{display:flex;align-items:center;gap:12px;padding:20px 0;text-decoration:none}
-.brand img{height:40px}
+.brand img{height:40px;width:auto}
 .brand span{font-family:var(--display);font-size:28px;line-height:1;text-transform:uppercase;letter-spacing:.01em}
 .brand sup{font-family:var(--body);font-size:10px;vertical-align:top;margin-left:2px}
 .tab{position:relative;border-left:1px solid var(--line);display:flex;text-decoration:none;color:var(--fg);transition:background .15s,color .15s}
@@ -68,11 +70,11 @@ h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
 .tab .ic svg{width:100%;height:100%;stroke-width:1.25}
 .tab:hover .ic{color:var(--fg)}
 .tab .tx{display:flex;flex-direction:column;gap:4px;min-width:0}
-.tab .tl{font:400 clamp(20px,2.2vw,32px)/1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.tab .tl{font:400 clamp(20px,2.3vw,32px)/1 var(--display);text-transform:uppercase;letter-spacing:.01em}
 .tab .n{font-size:11.5px;color:var(--muted);transition:color .15s}
 .tab:hover{background:var(--panel)}
 .top .tab{flex-direction:column;justify-content:space-between;gap:14px;padding:18px 18px 14px}
-.top .tab::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#003DA5 50%,#F2A900 50%);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.top .tab::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--stripe);transform:scaleX(0);transform-origin:left;transition:transform .2s}
 .top .tab:hover::before,.top .tab.on::before{transform:scaleX(1)}
 .top .ic{width:20px;height:20px}
 .top .tab.on{background:var(--inv-bg);color:var(--inv-fg)}
@@ -89,6 +91,10 @@ h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
 }
 @media (max-width:480px){.tab .tl{font-size:17px}.top .ic{width:18px;height:18px}}
 
+/* Three-color school stripe (hero): Royal Blue, Light Blue, Gold */
+.accent-bar{display:flex;height:6px;width:150px;margin-bottom:22px}
+.accent-bar span{flex:1}
+
 /* Sticky tester bar */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
 .tester{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1.2fr) auto;align-items:center;gap:20px;padding-block:10px;border-bottom:1px solid var(--line)}
@@ -100,6 +106,7 @@ h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
 .presets{display:flex;gap:16px;font-size:13.5px}
 .presets button,.vchips button{background:none;border:0;padding:0;font:500 13.5px/1.4 var(--body);color:var(--muted);cursor:pointer}
 .presets button[aria-pressed="true"],.vchips button[aria-pressed="true"]{color:var(--fg)}
+.vchips button[aria-pressed="true"]{text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:5px}
 .presets button:hover,.vchips button:hover{color:var(--fg)}
 .sizer{display:flex;align-items:center;gap:14px;font-size:13.5px}
 .sizer output{min-width:52px;font-variant-numeric:tabular-nums}
@@ -157,8 +164,8 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bor
 @media (max-width:620px){.g4,.g3,.g2{grid-template-columns:1fr}}
 .cell{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
 .cell .meta{margin:0}
-.stage{background:var(--stage);aspect-ratio:144/85;display:grid;place-items:center;position:relative;padding:4%}
-.stage img{width:100%;height:100%;object-fit:contain}
+.stage{background:var(--stage);aspect-ratio:144/85;display:grid;place-items:center;position:relative}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7%}
 .stage .tag{position:absolute;top:8px;left:8px;font-size:10.5px;color:#4b4a44;background:rgba(0,0,0,.06);padding:3px 6px}
 .cell p{font-size:13px;color:var(--muted)}
 .cell .acts{display:flex;gap:16px;margin-top:auto;padding-top:4px}
@@ -220,8 +227,6 @@ th{font-weight:500;font-size:11.5px;color:var(--muted)}
 .ramp button span{font:500 11px/1.25 var(--mono)}
 @media (max-width:700px){.ramp{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
-.sec-head .h-l{font-size:clamp(2.6rem,4.8vw,5.2rem)}
-.sec-head .sec-text{max-width:760px}
 /* Type specimens */
 #type{--size:120px;--spec-color:var(--fg)}
 .spec-row{border-bottom:1px solid var(--line);padding:16px clamp(16px,2vw,24px) 18px;display:grid;gap:8px}
@@ -262,17 +267,38 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--inv-bg);color:var(--inv-fg);padding:9px 14px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+
+/* How-to clips */
+.clip{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(16px,2.4vw,32px);align-items:center;margin:28px 0 0;border:1px solid var(--line);padding:14px;background:var(--panel)}
+.clip video{display:block;width:100%;aspect-ratio:16/9;background:#11110F;border-radius:2px}
+.clip figcaption{display:grid;gap:10px;padding-right:8px}
+.clip ol{margin:4px 0 0;padding-left:1.25em;display:grid;gap:6px;font-size:14px;color:var(--muted)}
+.clip ol li::marker{color:var(--gold);font-weight:600}
+@media (max-width:860px){.clip{grid-template-columns:1fr}.clip figcaption{padding:4px 2px 2px}}
+/* Section rhythm: same spacing tokens as the Del Sol and district guides */
+.row-in{padding:var(--sec-top) clamp(16px,2vw,24px) var(--sec-bottom)}
+.row-in>.meta:first-child{margin-bottom:var(--meta-gap)}
+.h-l+.lead,.h-l+.stack,.h-l+.two{margin-top:var(--lead-gap)}
+.lead+.clip,.lead+.grid,.lead+.two,.lead+.meta,.lead+.tbl,.lead+.stack{margin-top:var(--content-gap)!important}
+/* Hero title: always two lines, sized to the column width (RAIDERS BRAND = 5.27em in Channel Islands) */
+.hero-copy{container-type:inline-size}
+.hero-title span{display:block;white-space:nowrap}
+.hero-title{font-size:clamp(2.2rem,6.5vw,6.4rem)}
+@supports (font-size:1cqi){.hero-title{font-size:calc(100cqi / 5.45)}}
+.stage .tag{z-index:1}
+.stage.wide img{padding:5%}
+.hero-mark{display:grid;place-items:center;background:var(--stage);padding:clamp(16px,3vw,36px);aspect-ratio:144/85}
 </style>
 </head>
 <body>
-<header class="top">
+<header class="top" id="topnav">
   <div class="frame box">
     <a class="brand" href="#top" id="top"><img src="logos/svg/channel-islands-monogram-full-color.svg" alt=""><span>Raiders<sup>™</sup></span></a>
     <a class="tab" href="#logo" data-sec="logo"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><circle cx="12" cy="9" r="2.6"/><path d="M8.6 14l-1.6 7 5-2.6 5 2.6-1.6-7"/></svg></span><span class="tx"><span class="tl">Logos</span><span class="n">18 files · SVG + PNG</span></span></a>
     <a class="tab" href="#color" data-sec="color"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H16.5A4.5 4.5 0 0 0 21 10.5C21 6.4 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.1"/><circle cx="9.5" cy="7" r="1.1"/><circle cx="14.5" cy="7" r="1.1"/><circle cx="17.3" cy="10.7" r="1.1"/></svg></span><span class="tx"><span class="tl">Colors</span><span class="n">HEX · RGB · CMYK · PMS</span></span></a>
     <a class="tab" href="#type" data-sec="type"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4.5h16V7"/><path d="M12 4.5v15"/><path d="M8.5 19.5h7"/></svg></span><span class="tx"><span class="tl">Type</span><span class="n">Channel Islands · Open Sans</span></span></a>
     <a class="tab" href="#usage" data-sec="usage"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M9 13.5l2 2 4-4.5"/></svg></span><span class="tx"><span class="tl">Rules</span><span class="n">Do's &amp; don'ts</span></span></a>
-    <div class="tab-end lbl"><span>Channel Islands High School<br>Brand Style Guide · 2026</span></div>
+    <div class="tab-end lbl"><span>Channel Islands High School<br>Brand Style Guide · 2026</span><a class="dl-link" href="https://teolopez-ouhsd.github.io/communications/brand-guidelines.html">← District brand guide</a></div>
   </div>
 </header>
 
@@ -288,7 +314,8 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   <div class="meta"><span class="lbl"><b>Channel Islands High School</b> · Oxnard, California</span><span class="r lbl"><span>Official Club Logos &amp; Uniform Graphics</span><span>Marks by Brandiose · v7/11/21</span><span>Oxnard Union High School District</span></span></div>
   <div class="hero-grid">
     <div class="hero-copy">
-      <h1 class="h-xl" style="margin-bottom:18px">Raiders Brand<br>Style Guide</h1>
+      <div class="accent-bar" aria-hidden="true"><span style="background:#003DA5"></span><span style="background:#0072CE"></span><span style="background:#F2A900"></span></div>
+      <h1 class="h-xl hero-title" style="margin-bottom:18px"><span>Raiders Brand</span><span>Style Guide</span></h1>
       <p>How to use the Channel Islands Raiders logos, colors, and type consistently across print, web, apparel, uniforms, presentations, and AI-generated materials.</p>
       <p><b>Everyone creating Channel Islands materials, including staff, coaches, clubs, ASB, and boosters, should check this page before designing anything new.</b></p>
     </div>
@@ -299,12 +326,12 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <!-- LOGO LIBRARY -->
 <section class="row" id="logo"><div class="row-in">
   <div class="meta"><span class="lbl"><b>01</b> Logo Library</span><span class="r lbl"><span>6 marks</span><span>5 color versions</span><span>SVG + PNG</span></span></div>
-  <div class="sec-head">
-    <div class="sec-text">
-      <h2 class="h-l">Logo Library</h2>
-      <p class="lead">Pick the mark that fits your space and the version that fits how it will be printed or displayed. Always use these files. <b>Never recreate, redraw, trace, or approximate any Channel Islands mark.</b></p>
-    </div>
-  </div>
+    <h2 class="h-l">Logo Library</h2>
+    <p class="lead">Pick the mark that fits your space and the version that fits how it will be printed or displayed. Always use these files. <b>Never recreate, redraw, trace, or approximate any Channel Islands mark.</b></p>
+  <figure class="clip">
+    <video poster="videos/howto-logos-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Choose a logo version" aria-describedby="steps-logos"><source src="videos/howto-logos.mp4" type="video/mp4"><source src="videos/howto-logos.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:30 · no sound</span><h3 class="h-s">Choose a logo version</h3><ol id="steps-logos"><li>Start with the background you are designing on.</li><li>White or light background: use the full-color logo.</li><li>On Royal Blue: use the one-color gold version.</li><li>Black-and-white printing: use grayscale.</li><li>One ink, vinyl, or embroidery: use a one-color file.</li><li>Then pick the file format: SVG for web and signs, PNG for slides and docs.</li></ol></figcaption>
+  </figure>
   <div class="meta" style="margin:28px 0 12px">
     <div class="vchips" role="group" aria-label="Color version">
       <button type="button" data-v="full-color" aria-pressed="true">Full color</button>
@@ -323,13 +350,13 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <!-- CLEAR SPACE -->
 <section class="row" id="clear-space"><div class="row-in">
   <div class="meta"><span class="lbl"><b>02</b> Clear Space &amp; Size</span><span class="r lbl"><span>x = height of the CHANNEL ISLANDS line</span></span></div>
-  <div class="sec-head">
-    <div class="sec-text">
-      <h2 class="h-l">Clear Space</h2>
-      <p class="lead">Keep the area around the logo free of text, photos, other logos, and the edge of the page so it can breathe and stay legible.</p>
-    </div>
-  </div>
-  <div class="two" style="margin-top:28px">
+    <h2 class="h-l">Clear Space</h2>
+    <p class="lead">Keep the area around the logo free of text, photos, other logos, and the edge of the page so it can breathe and stay legible.</p>
+  <figure class="clip">
+    <video poster="videos/howto-clearspace-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Give the logo room" aria-describedby="steps-clearspace"><source src="videos/howto-clearspace.mp4" type="video/mp4"><source src="videos/howto-clearspace.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:25 · no sound</span><h3 class="h-s">Give the logo room</h3><ol id="steps-clearspace"><li>Measure x: the height of the CHANNEL ISLANDS letters.</li><li>Keep x of empty space on every side.</li><li>Text, photos, and edges stay outside that line.</li><li>Too small for the detail? Switch to the CI Monogram.</li></ol></figcaption>
+  </figure>
+  <div class="two">
     <div class="cs"><div class="cs-box"><img src="logos/svg/channel-islands-wordmark-stacked-full-color.svg" alt="Channel Islands stacked word mark with clear space zone marked"><span class="cs-x t">x</span><span class="cs-x b">x</span><span class="cs-x l">x</span><span class="cs-x r">x</span></div></div>
     <div class="stack">
       <p><b>Minimum clear space on every side equals x,</b> the height of the letters in CHANNEL ISLANDS (the small top line of the stacked word mark). For marks without lettering, such as the Raider Head, Raider Body, ship, or monogram, use one quarter of the mark's width. When the logo is resized, the clear space scales with it.</p>
@@ -351,13 +378,13 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <!-- USAGE -->
 <section class="row" id="usage"><div class="row-in">
   <div class="meta"><span class="lbl"><b>03</b> Usage Rules</span><span class="r lbl"><span>4 do</span><span>8 don't</span></span></div>
-  <div class="sec-head">
-    <div class="sec-text">
-      <h2 class="h-l">Protect the Marks</h2>
-      <p class="lead">Proportions, colors, and construction are fixed. If you find yourself dragging a corner handle, changing a fill color, or adding an effect, stop and grab a different file from the library instead.</p>
-    </div>
-  </div>
-  <div class="grid g4" style="margin-top:28px">
+    <h2 class="h-l">Protect the Marks</h2>
+    <p class="lead">Proportions, colors, and construction are fixed. If you find yourself dragging a corner handle, changing a fill color, or adding an effect, stop and grab a different file from the library instead.</p>
+  <figure class="clip">
+    <video poster="videos/howto-usage-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Protect the marks" aria-describedby="steps-usage"><source src="videos/howto-usage.mp4" type="video/mp4"><source src="videos/howto-usage.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:29 · no sound</span><h3 class="h-s">Protect the marks</h3><ol id="steps-usage"><li>Never stretch or squash. Hold Shift when resizing.</li><li>Never recolor the logo.</li><li>No shadows, glows, or added outlines.</li><li>Don't rotate or tilt it.</li><li>On Royal Blue, switch to the one-color gold file.</li><li>Need a different look? Choose another official file.</li></ol></figcaption>
+  </figure>
+  <div class="grid g4">
     <div class="cell do"><div class="ex"><img src="logos/svg/channel-islands-raider-head-full-color.svg" alt=""></div><span class="verdict">✓ Do</span><p>Use the full-color Raider Head on white or light backgrounds whenever color printing is available.</p></div>
     <div class="cell do"><div class="ex" style="background:#003DA5"><img src="logos/svg/channel-islands-raider-head-one-color-gold.svg" alt=""></div><span class="verdict">✓ Do</span><p>On Royal Blue, switch to a one-color gold mark. Gold on Royal Blue passes contrast; the full-color blue hat would disappear.</p></div>
     <div class="cell do"><div class="ex"><img src="logos/svg/channel-islands-raider-body-full-color.svg" alt=""></div><span class="verdict">✓ Do</span><p>Use the Raider Body for tall spaces: banners, hallway graphics, and spirit art.</p></div>
@@ -377,13 +404,13 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <!-- COLOR -->
 <section class="row" id="color"><div class="row-in">
   <div class="meta"><span class="lbl"><b>04</b> Color</span><span class="r lbl"><span>Pantone · CMYK · RGB · HEX</span><span>Click any value to copy</span></span></div>
-  <div class="sec-head">
-    <div class="sec-text">
-      <h2 class="h-l">Color Palette</h2>
-      <p class="lead">Royal Blue leads. Gold is the accent that outlines and highlights the marks. Light Blue and Mocha support, appearing mostly in the Raider's coat, hair, face, and the ship.</p>
-    </div>
-  </div>
-  <div class="grid" id="swatches" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:28px"></div>
+    <h2 class="h-l">Color Palette</h2>
+    <p class="lead">Royal Blue leads. Gold is the accent that outlines and highlights the marks. Light Blue and Mocha support, appearing mostly in the Raider's coat, hair, face, and the ship.</p>
+  <figure class="clip">
+    <video poster="videos/howto-color-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Use the colors" aria-describedby="steps-color"><source src="videos/howto-color.mp4" type="video/mp4"><source src="videos/howto-color.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:27 · no sound</span><h3 class="h-s">Use the colors</h3><ol id="steps-color"><li>Channel Islands has four official colors.</li><li>Royal Blue leads. Gold is the accent. Light Blue and Mocha support.</li><li>On Royal Blue, use white or gold text.</li><li>For text on white, use Royal Blue. Never gold or mocha.</li><li>Never set Light Blue on Royal Blue, or Gold on Light Blue.</li></ol></figcaption>
+  </figure>
+  <div class="grid" id="swatches" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"></div>
   <p class="lbl" style="margin:24px 0 8px">Royal Blue · shades &amp; tints</p>
   <div class="ramp" id="ramp-royal"></div>
   <p class="lbl" style="margin:16px 0 8px">Light Blue · shades &amp; tints</p>
@@ -402,7 +429,7 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   <div class="meta"><span class="lbl"><b>05</b> Uniforms &amp; Apparel</span><span class="r lbl"><span>Textile · Twill · Thread</span></span></div>
   <h2 class="h-l">Uniform Specs</h2>
   <p class="lead">Hand these numbers to any uniform supplier, screen printer, or embroidery shop so every jersey, polo, and cap comes out in the same blue and gold.</p>
-  <div class="tbl" style="margin-top:28px"><table>
+  <div class="tbl"><table>
     <thead><tr><th>Color</th><th>Textile (Pantone)</th><th>Twill (Liebe/Webster)</th><th>Madeira</th><th>Robison-Anton</th><th>Isacord</th><th>FuFu</th><th>New Era Cap</th><th>Grayscale</th></tr></thead>
     <tbody class="num">
       <tr><td><span class="sq" style="background:#003DA5"></span>Royal Blue</td><td>18-4051 TCX</td><td>Royal Blue</td><td>1134</td><td>2619</td><td>3522</td><td>3653</td><td>Royal Blue</td><td>100%</td></tr>
@@ -423,7 +450,7 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   <div class="meta"><span class="lbl"><b>06</b> Accessibility</span><span class="r lbl"><span>WCAG 2.2</span><span>4.5:1 body · 3:1 large text &amp; UI</span></span></div>
   <h2 class="h-l">Contrast</h2>
   <p class="lead">WCAG requires at least <b>4.5:1</b> contrast for normal body text, and at least <b>3:1</b> for large text (18px and up, or 14px bold) and UI elements like icons, buttons, and input borders. Ratios below are calculated from the official HEX values.</p>
-  <div class="tbl" style="margin-top:28px"><table>
+  <div class="tbl"><table>
     <thead><tr><th>Color</th><th>As text on white</th><th>As text on black</th><th>White text on it</th><th>Black text on it</th></tr></thead>
     <tbody id="contrast" class="num"></tbody>
   </table></div>
@@ -444,12 +471,12 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <section class="row" id="type">
   <div class="row-in" style="padding-bottom:28px">
     <div class="meta"><span class="lbl"><b>07</b> Typography</span><span class="r lbl"><span>Channel Islands Regular v1.000</span><span>All capitals · 1 style</span><span>Open Sans for body</span></span></div>
-    <div class="sec-head">
-      <div class="sec-text">
-        <h2 class="h-l">Channel Islands</h2>
-        <p class="lead">The Raiders' own headline typeface. <b>Channel Islands</b> is a condensed athletic block face, so headlines, event titles, and player names match the logos. It is drawn in capitals only: lowercase letters print as capitals. Use the tester below: type your own wording or pick a preset, drag the slider to resize, and choose a color.</p>
-      </div>
-    </div>
+      <h2 class="h-l">Channel Islands</h2>
+      <p class="lead">The Raiders' own headline typeface. <b>Channel Islands</b> is a condensed athletic block face, so headlines, event titles, and player names match the logos. It is drawn in capitals only: lowercase letters print as capitals. Use the tester below: type your own wording or pick a preset, drag the slider to resize, and choose a color.</p>
+  <figure class="clip">
+    <video poster="videos/howto-type-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Use the typefaces" aria-describedby="steps-type"><source src="videos/howto-type.mp4" type="video/mp4"><source src="videos/howto-type.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:27 · no sound</span><h3 class="h-s">Use the typefaces</h3><ol id="steps-type"><li>Use Channel Islands for headlines and titles.</li><li>Use Open Sans for everything else.</li><li>It's all caps: lowercase keys type capitals.</li><li>It has no accent marks. Set Spanish in Open Sans.</li><li>Never retype the word mark. Place the logo file.</li></ol></figcaption>
+  </figure>
     <div class="meta" style="margin:22px 0 0"><span></span><a class="btn" href="channel-islands-fonts.zip" download>Download font family ↓</a></div>
   </div>
     <div class="tester tester-in" aria-label="Type tester" style="padding-inline:clamp(16px,2vw,24px)">
@@ -483,7 +510,7 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   <div class="row-in" style="padding-top:28px">
     <p class="lbl" style="margin-bottom:10px">Character set · hover to inspect</p>
     <div class="glyphs" id="glyphs"></div>
-    <div class="grid g2" style="margin-top:28px">
+    <div class="grid g2">
       <div class="cell" style="gap:14px">
         <div class="meta" style="margin:0"><span class="lbl"><b>Open Sans</b> · body text</span><span class="r lbl"><a class="dl-link" href="https://fonts.google.com/specimen/Open+Sans" target="_blank" rel="noopener">Google Fonts ↗</a></span></div>
         <div class="body-spec">Open Sans</div>
@@ -509,7 +536,7 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <section class="row" id="name"><div class="row-in">
   <div class="meta"><span class="lbl"><b>08</b> Name &amp; Mascot</span></div>
   <h2 class="h-l">Writing the Name</h2>
-  <div class="grid g2" style="margin-top:28px">
+  <div class="grid g2">
     <div class="cell"><span class="verdict" style="color:var(--ok)">✓ Do</span><ul class="tick">
       <li>Use <b>Channel Islands High School</b> on first reference in formal writing, then <b>Channel Islands</b>.</li>
       <li>The team name is <b>Raiders</b>: capital R, plural. One athlete or the mascot figure is <b>a Raider</b>.</li>
@@ -525,13 +552,13 @@ footer .frame{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 <!-- AI -->
 <section class="row" id="ai"><div class="row-in">
   <div class="meta"><span class="lbl"><b>09</b> AI &amp; Flyers</span><span class="r lbl"><span>Artwork only · real logo · real fonts</span></span></div>
-  <div class="sec-head">
-    <div class="sec-text">
-      <h2 class="h-l">AI Image Tools</h2>
-      <p class="lead">Image generators can't reproduce the Raider exactly. Ask one to "include the Channel Islands logo" and it invents a new, slightly wrong pirate: a different hat, face, or sword, and made-up lettering. Use AI for the artwork only, then add the real logo and text yourself.</p>
-    </div>
-  </div>
-  <ol class="steps grid g4" style="margin-top:28px">
+    <h2 class="h-l">AI Image Tools</h2>
+    <p class="lead">Image generators can't reproduce the Raider exactly. Ask one to "include the Channel Islands logo" and it invents a new, slightly wrong pirate: a different hat, face, or sword, and made-up lettering. Use AI for the artwork only, then add the real logo and text yourself.</p>
+  <figure class="clip">
+    <video poster="videos/howto-ai-poster.jpg" muted loop playsinline preload="none" controls aria-label="How-to video: Make a flyer with AI art" aria-describedby="steps-ai"><source src="videos/howto-ai.mp4" type="video/mp4"><source src="videos/howto-ai.webm" type="video/webm"></video>
+    <figcaption><span class="lbl"><b>Watch</b> · 0:22 · no sound</span><h3 class="h-s">Make a flyer with AI art</h3><ol id="steps-ai"><li>Use AI for the background art only.</li><li>Leave calm, empty space for the logo.</li><li>Place the real logo file from this guide.</li><li>Add the words yourself in Channel Islands and Open Sans.</li></ol></figcaption>
+  </figure>
+  <ol class="steps grid g4">
     <li><b>Generate artwork only</b><span>Backgrounds, illustration, or photo-style scenes. No logos, mascots, text, or seals.</span></li>
     <li><b>Leave clear space</b><span>Ask for empty, calm space in a corner or along one edge where the logo will go.</span></li>
     <li><b>Place the real logo</b><span>Drop the official PNG or SVG into Canva, Adobe Express, Slides, or Word.</span></li>
